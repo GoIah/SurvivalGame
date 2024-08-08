@@ -20,7 +20,6 @@ end
 function register.register() end
 
 register.refactor = setmetatable({}, {
-	__index = register,
 	__call = function(t)
 		print(t)
 	end,
