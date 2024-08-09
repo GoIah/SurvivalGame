@@ -150,6 +150,12 @@ function regLib.Create(Name: string)
 	return CreateType
 end
 
-function Refactor(Name: number) end
+function regLib.Refactor(Name: number, Data)
+	local Registor = regLib.registers[Name]
+
+	if Registor then
+		
+	end
+end
 
 return regLib
