@@ -8,7 +8,7 @@ require(Modules.Initialization)
 local Register = require(Modules.Register)
 
 local IronOreRegister = Register.create("Ore", "IRON_ORE")
-IronOreRegister:Test()
-IronOreRegister.Test:new()
+IronOreRegister.Test.new()
+IronOreRegister.Test()
 
-IronOreRegister:refactor()
+IronOreRegister:refactor().Type()
