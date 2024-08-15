@@ -11,4 +11,10 @@ local IronOreRegister = Register.create("Ore", "IRON_ORE")
 IronOreRegister.Test.new()
 IronOreRegister.Test()
 
-IronOreRegister:refactor().Type()
+print(IronOreRegister)
+IronOreRegister:refactor().Type().
+                            add("N", false)
+print(IronOreRegister)
+IronOreRegister:refactor().Type().
+                            add("N", true)
+print(IronOreRegister)

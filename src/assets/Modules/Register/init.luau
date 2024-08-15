@@ -25,20 +25,6 @@ function register.create(Name: string, Type: string)
 
 	local self = {}
 
-	self.refactor = function()
-		return Recursive.Create({
-			Register_add = function() end,
-			Type_add = function() end,
-			Type = function() end,
-			Register = function() end,
-		}, {
-			["Register_add"] = { ["_name"] = "add", ["_returns"] = { "Register_add" } },
-			["Type_add"] = { ["_name"] = "add", ["_returns"] = { "Type_add", "Register" } },
-			["Type"] = { ["_name"] = "Type", ["_main"] = true, ["_returns"] = { "Type_add", "Register" } },
-			["Register"] = { ["_name"] = "Register", ["_returns"] = { "Register_add" } },
-		})
-	end
-
 	self.Name = Name
 	self.Registor = DeepCopy(Lib.registers[Name])
 	self.Type = DeepCopy(Lib.types[Type])
@@ -56,6 +42,26 @@ function register.create(Name: string, Type: string)
 	self.Test = Test
 
 	return Metatable
+end
+
+function  register:refactor()
+	return Recursive.Create({
+		Register_add = function( Paramater: string, Value )
+			if not (Paramater or Value) then return end
+			self.Type[Paramater] = Value
+		end,
+		Type_add = function( FuncName: string, Value: FunctionalTest )
+			if not (FuncName or Value) then return end
+			self.Type[FuncName] = Value
+		end,
+		Type = function() end,
+		Register = function() end,
+	}, {
+		["Register_add"] = { ["_name"] = "add", ["_returns"] = { "Register_add" } },
+		["Type_add"] = { ["_name"] = "add", ["_returns"] = { "Type_add", "Register" } },
+		["Type"] = { ["_name"] = "Type", ["_main"] = true, ["_returns"] = { "Type_add", "Register" } },
+		["Register"] = { ["_name"] = "Register", ["_returns"] = { "Register_add" } },
+	})
 end
 
 function register:register() end

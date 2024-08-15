@@ -6,11 +6,8 @@ export type registerImpl = {
 	},
 	create: (Name: string, Type: string) -> registerImpl,
 	register: () -> (),
-	refactor: () -> {
-		Register_add: () -> { add: () -> registerImpl },
-		Type_add: () -> { add: () -> registerImpl, Register: () -> registerImpl },
-		Type: () -> registerImpl,
-		Register: () -> registerImpl,
+	refactor: (registerImpl) -> {
+		Type: Type
 	},
 	Name: string,
 	Registor: any,
@@ -22,11 +19,13 @@ export type testImpl = {
 	__call: (test: any) -> registerImpl,
 }
 
-type register = typeof(setmetatable({} :: {
-	refactor: () -> {
-		Type: () -> (),
-	}
-}, {} :: registerImpl))
+type T_add = ( Paramater: string, Value: string | number | CFrame | Vector2 | Vector3 ) -> {["add"]: T_add, ["Register"]: Register}
+type R_add = ( FunctionName: string, Function: FunctionalTest ) -> {["add"]: R_add}
+type Register = () -> {["add"]: R_add}
+type Type = () -> {["add"]: T_add, ["Register"]: Register}
+
+
+type register = typeof(setmetatable({} :: { }, {} :: registerImpl))
 
 export type test = typeof(setmetatable({} :: {
 	new: () -> registerImpl,
